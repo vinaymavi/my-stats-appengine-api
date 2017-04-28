@@ -1,10 +1,14 @@
-
-
 # [START imports]
 import endpoints
 from protorpc import message_types
 from protorpc import messages
 from protorpc import remote
+from google.appengine.ext import ndb
+import json
+import logging
+from datetime import datetime
+
+
 # [END imports]
 
 
@@ -23,13 +27,27 @@ STORED_GREETINGS = GreetingCollection(items=[
     Greeting(message='hello world!'),
     Greeting(message='goodbye world!'),
 ])
+
+
+class Website(ndb.Model):
+    startTime = ndb.DateTimeProperty()
+    endTime = ndb.DateTimeProperty()
+    duration = ndb.FloatProperty()
+    port = ndb.StringProperty()
+    domain = ndb.StringProperty()
+    protocol = ndb.StringProperty()
+
+
+class WebsiteData(messages.Message):
+    value = messages.StringField(1)
+
+
 # [END messages]
 
 
 # [START greeting_api]
 @endpoints.api(name='greeting', version='v1')
 class GreetingApi(remote.Service):
-
     @endpoints.method(
         # This method does not take a request message.
         message_types.VoidMessage,
@@ -68,6 +86,7 @@ class GreetingApi(remote.Service):
         except (IndexError, TypeError):
             raise endpoints.NotFoundException(
                 'Greeting {} not found'.format(request.id))
+
     # [END greeting_api]
 
     # [START multiply]
@@ -82,15 +101,26 @@ class GreetingApi(remote.Service):
         # This method accepts a request body containing a Greeting message
         # and a URL parameter specifying how many times to multiply the
         # message.
-        MULTIPLY_RESOURCE,
+        WebsiteData,
         # This method returns a Greeting message.
-        Greeting,
-        path='greetings/multiply/{times}',
+        WebsiteData,
+        path='website/data/push',
         http_method='POST',
-        name='greetings.multiply')
+        name='website_data.push')
     def multiply_greeting(self, request):
-        return Greeting(message=request.message * request.times)
-    # [END multiply]
+        logging.info(request.value)
+        websiteDic = json.loads(request.value);
+        website = Website()
+        logging.warning(websiteDic['duration'])
+        website.duration = websiteDic['duration']
+        website.port = websiteDic['domain']['port']
+        website.domain = websiteDic['domain']['domain']
+        website.protocol = websiteDic['domain']['protocol']
+        website.startTime = datetime.strptime(websiteDic['startTime'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        website.endTime = datetime.strptime(websiteDic['endTime'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        website.put()
+        return WebsiteData(value=request.value)
+        # [END multiply]
 
 
 # [START api_server]
