@@ -29,6 +29,7 @@ STORED_GREETINGS = GreetingCollection(items=[
 ])
 
 
+# TODO write a class to convert Model to Message
 class Website(ndb.Model):
     startTime = ndb.DateTimeProperty()
     endTime = ndb.DateTimeProperty()
@@ -36,6 +37,19 @@ class Website(ndb.Model):
     port = ndb.StringProperty()
     domain = ndb.StringProperty()
     protocol = ndb.StringProperty()
+
+
+class WebsiteResp(messages.Message):
+    startTime = messages.StringField(1)
+    endTime = messages.StringField(2)
+    duration = messages.FloatField(3)
+    port = messages.StringField(4)
+    domain = messages.StringField(5)
+    protocol = messages.StringField(6)
+
+
+class WebsiteRespCol(messages.Message):
+    items = messages.MessageField(WebsiteResp, 1, repeated=True)
 
 
 class WebsiteData(messages.Message):
@@ -107,7 +121,7 @@ class GreetingApi(remote.Service):
         path='website/data/push',
         http_method='POST',
         name='website_data.push')
-    def multiply_greeting(self, request):
+    def data_push(self, request):
         logging.info(request.value)
         websiteDic = json.loads(request.value);
         website = Website()
@@ -116,11 +130,33 @@ class GreetingApi(remote.Service):
         website.port = websiteDic['domain']['port']
         website.domain = websiteDic['domain']['domain']
         website.protocol = websiteDic['domain']['protocol']
-        website.startTime = datetime.strptime(websiteDic['startTime'],'%Y-%m-%dT%H:%M:%S.%fZ')
-        website.endTime = datetime.strptime(websiteDic['endTime'],'%Y-%m-%dT%H:%M:%S.%fZ')
+        website.startTime = datetime.strptime(websiteDic['startTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        website.endTime = datetime.strptime(websiteDic['endTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
         website.put()
         return WebsiteData(value=request.value)
         # [END multiply]
+
+    @endpoints.method(
+        message_types.VoidMessage,
+        WebsiteRespCol,
+        path='website/data/get',
+        http_method='GET',
+        name='website_data.get')
+    def data_get(self, req):
+        query = Website.query()
+        result = query.fetch()
+        website_resp_list = []
+        for webresp in result:
+            website_resp_list.append(WebsiteResp(
+                domain=webresp.domain,
+                protocol=webresp.protocol,
+                port=webresp.port,
+                duration=webresp.duration,
+                startTime=webresp.startTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                endTime=webresp.endTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            ))
+        logging.info(len(website_resp_list))
+        return WebsiteRespCol(items=website_resp_list)
 
 
 # [START api_server]
