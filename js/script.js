@@ -10,6 +10,9 @@ function drawChart(data) {
     var _data = [];
     var keysArr = Object.keys(data);
     for (var i = 0; i < keysArr.length; i++) {
+        if (i > 10) {
+            continue;
+        }
         var obj = data[keysArr[i]];
         var name = obj.name;
         var x = [];
