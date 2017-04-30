@@ -1,0 +1,107 @@
+html,body{
+  margin: 0;
+  padding: 0;
+}
+header .logo {
+  height: 55px;
+  padding: 10px 10px 10px 50px;
+}
+
+header .logo-desc {
+  font-weight: 600;
+  color: #757575;
+}
+
+header .nav-link {
+  color: #757575
+}
+
+.hero-banner {
+  background: #039be5 url("../images/landing-hero-welcome.png") no-repeat 328px 0;
+  min-width: 1000px;
+  min-height: 368px;
+  width: 100%
+}
+
+.main-content {
+  background: #F4F6F7;
+  min-width: 1000px;
+  min-height: 140px;
+  width: 100%;
+  .content {
+    width: 50%;
+    margin: auto;
+    color: #424242;
+    padding-left: 80px;;
+    h4, p {
+      font-weight: 200;
+    }
+  }
+}
+
+.main-content img {
+  width: 100px;
+}
+
+.main-desc {
+  min-height: 300px;
+  .content {
+    max-width: 75%;
+    color: #424242;
+    h2, p, a {
+      font-weight: 200;
+    }
+  }
+}
+
+.main-desc img {
+  width: calc((100% - 80px) / 1.2);
+}
+
+.try-it-now {
+  background-color: #039be5;
+  min-height: 200px;
+  .content {
+    color: white;
+    width: 40%;
+    margin: auto;
+    padding: 25px ;
+    h2, p, a {
+      font-weight: 200;
+    }
+  }
+}
+
+footer {
+  background-color: #37424b;
+  padding: 0 10%;
+  color: white;
+  h1, p, .btn,a {
+    font-weight: 200;
+  }
+  .row:first-child{
+    min-height: 150px;
+  }
+  a{
+    color:white;
+    font-weight: 200;
+    &:hover{
+      color:white;
+    }
+  }
+}
+
+.hero-banner-content {
+  width: 80%;
+  margin: auto;
+  padding: 80px 20px;
+  color: white;
+  h1, p, .btn {
+    font-weight: 200;
+  }
+  p {
+    max-width: 400px;
+    font-size: 20px;
+  }
+
+}
