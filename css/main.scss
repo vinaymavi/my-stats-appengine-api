@@ -1,7 +1,8 @@
-html,body{
+html, body {
   margin: 0;
   padding: 0;
 }
+
 header .logo {
   height: 55px;
   padding: 10px 10px 10px 50px;
@@ -65,7 +66,7 @@ header .nav-link {
     color: white;
     width: 40%;
     margin: auto;
-    padding: 25px ;
+    padding: 25px;
     h2, p, a {
       font-weight: 200;
     }
@@ -76,17 +77,29 @@ footer {
   background-color: #37424b;
   padding: 0 10%;
   color: white;
-  h1, p, .btn,a {
+  h1, p, .btn, a {
     font-weight: 200;
   }
-  .row:first-child{
+  .row:first-child {
     min-height: 150px;
   }
-  a{
-    color:white;
+  a {
+    color: white;
     font-weight: 200;
-    &:hover{
-      color:white;
+    &:hover {
+      color: white;
+    }
+  }
+  &.after-login {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    .row:first-child {
+      min-height: 40px;
+      line-height: 40px;
+      p {
+        margin: 0;
+      }
     }
   }
 }
@@ -104,4 +117,43 @@ footer {
     font-size: 20px;
   }
 
+}
+
+/*Login page*/
+.blue-strip {
+  background-color: #039be5;
+  min-height: 60px;
+}
+
+.login {
+  .content {
+    padding: 10% 0;
+    color: #424242;
+    background-color: #F4F6F7;
+    min-height: 300px;
+    h1, button {
+      font-weight: 200;
+      margin-bottom: 50px;
+    }
+  }
+}
+
+.right-block {
+  border-left: 1px solid #ddd;
+}
+
+html, body {
+  height: 100%;
+  .container-fluid:nth-child(2) {
+    height: calc((100% - 115px));
+    div.content.text-left {
+      height: 100%;
+      .row {
+        height: 100%;
+        .right-block {
+          height: 100%
+        }
+      }
+    }
+  }
 }

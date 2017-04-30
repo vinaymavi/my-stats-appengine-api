@@ -70,6 +70,15 @@ footer {
     font-weight: 200; }
     footer a:hover {
       color: white; }
+  footer.after-login {
+    position: absolute;
+    bottom: 0px;
+    width: 100%; }
+    footer.after-login .row:first-child {
+      min-height: 40px;
+      line-height: 40px; }
+      footer.after-login .row:first-child p {
+        margin: 0; }
 
 .hero-banner-content {
   width: 80%;
@@ -81,5 +90,33 @@ footer {
   .hero-banner-content p {
     max-width: 400px;
     font-size: 20px; }
+
+/*Login page*/
+.blue-strip {
+  background-color: #039be5;
+  min-height: 60px; }
+
+.login .content {
+  padding: 10% 0;
+  color: #424242;
+  background-color: #F4F6F7;
+  min-height: 300px; }
+  .login .content h1, .login .content button {
+    font-weight: 200;
+    margin-bottom: 50px; }
+
+.right-block {
+  border-left: 1px solid #ddd; }
+
+html, body {
+  height: 100%; }
+  html .container-fluid:nth-child(2), body .container-fluid:nth-child(2) {
+    height: calc((100% - 115px)); }
+    html .container-fluid:nth-child(2) div.content.text-left, body .container-fluid:nth-child(2) div.content.text-left {
+      height: 100%; }
+      html .container-fluid:nth-child(2) div.content.text-left .row, body .container-fluid:nth-child(2) div.content.text-left .row {
+        height: 100%; }
+        html .container-fluid:nth-child(2) div.content.text-left .row .right-block, body .container-fluid:nth-child(2) div.content.text-left .row .right-block {
+          height: 100%; }
 
 /*# sourceMappingURL=main.css.map */

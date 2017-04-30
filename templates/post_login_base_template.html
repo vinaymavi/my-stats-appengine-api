@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block header %}
+    <div class="container-fluid">
+        <header class="row align-items-center">
+            <div class="col">
+                <img alt="MyStats home" class="logo" src="../images/Icons8_flat_pie_chart.svg.png"/><span
+                    class="logo-desc"> My Stats</span>
+            </div>
+        </header>
+    </div>
+{% endblock header %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row blue-strip">
+            <div class="col"></div>
+        </div>
+        <div class="content text-left">
+            <div class="row">
+                <div class="col-lg-2 left-block">
+                    {% block left %}
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Dashboard</a>
+                            </li>
+                        </ul>
+                    {% endblock left %}
+                </div>
+                <div class="col-lg-10 right-block">
+                    {% block right %}
+                        <div id="my-chart" style="width:100%;"></div>
+                    {% endblock right %}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}
