@@ -144,7 +144,7 @@ class GreetingApi(remote.Service):
         name='website_data.get')
     def data_get(self, req):
         query = Website.query()
-        result = query.fetch()
+        result = query.order(Website.startTime).fetch()
         website_resp_list = []
         for webresp in result:
             website_resp_list.append(WebsiteResp(
