@@ -1,7 +1,7 @@
 /**
  * main script to make ajax requests, handle responses and create graphs.
  */
-
+/*TODO need to optimise this code.*/
 /**
  * Draw chart.
  * @param data
@@ -16,33 +16,17 @@ function drawChart(websiteData) {
         var name = obj.name;
         var x = [];
         var y = [];
-        obj.data.forEach(function (val, index) {
-            y.push(secToHours(val.duration));
-            x.push(dateFormat(val.startTime));
+        Object.keys(obj.data).forEach(function (dateStr, index) {
+            y.push(secToHours(obj.data[dateStr]["duration"]));
+            x.push(dateStr);
         });
         _data.push({
             x: x,
             y: y,
             mode: 'lines',
             type: 'scatter',
-            name: name
+            name: name,
         });
-    }
-
-    function dateFormat(ts) {
-        var dateStr = "";
-        var d = new Date(ts);
-        dateStr = d.getFullYear() + "-";
-        dateStr = dateStr + (d.getMonth() + 1) + "-";
-        dateStr = dateStr + (d.getDate()) + " ";
-        dateStr = dateStr + (d.getHours()) + ":";
-        dateStr = dateStr + (d.getMinutes()) + ":";
-        dateStr = dateStr + (d.getSeconds()) + "";
-        return dateStr;
-    }
-
-    function secToHours(sec) {
-        return (sec / (60 * 60));
     }
 
     var layout = {
@@ -53,11 +37,27 @@ function drawChart(websiteData) {
         },
         yaxis: {
             title: 'Time(Hours)',
-            type: 'linear'
+            type: 'linear',
+            hoverformat: '.2f'
         }
     };
     Plotly.newPlot('my-chart', _data, layout, {showLink: false});
 }
+
+function dateFormat(ts) {
+    var dateStr = "";
+    var d = new Date(ts);
+    dateStr = d.getFullYear() + "-";
+    dateStr = dateStr + (d.getMonth() + 1) + "-";
+    dateStr = dateStr + (d.getDate()) + "";
+    return dateStr;
+}
+
+
+function secToHours(sec) {
+    return (sec / (60 * 60));
+}
+
 /**
  * Process array of items and group single website data.
  * @example
@@ -71,10 +71,11 @@ function processItems(items) {
     var data = {};
     var durObj = {};
     var sortArr;
+    var dateStr;
     items.forEach(function (val, index) {
         if (typeof data[val.domain] === "undefined") {
             data[val.domain] = {
-                data: [],
+                data: {},
                 name: val.domain
             }
             durObj[val.domain] = {
@@ -82,7 +83,16 @@ function processItems(items) {
             }
         }
         durObj[val.domain]['duration'] += val.duration;
-        data[val.domain].data.push(val);
+        dateStr = dateFormat(val.startTime);
+        if (typeof data[val.domain].data[dateStr] === "undefined") {
+            data[val.domain].data[dateStr] = {};
+            data[val.domain].data[dateStr]["duration"] = val.duration;
+            data[val.domain].data[dateStr]["count"] = 1;
+        } else {
+            data[val.domain].data[dateStr]["duration"] += val.duration;
+            data[val.domain].data[dateStr]["count"] += 1;
+        }
+
     });
     console.log(durObj);
     sortArr = sortByDur(durObj);
