@@ -1,6 +1,6 @@
 from google.appengine.ext import ndb
 from entities.entities import MasterDevice, Device
-from response.response import MasterDeviceMessage, DeviceMessage
+from my_stats_messages.my_stats_messages import MasterDeviceMessage, DeviceMessage
 import base64
 import logging
 
@@ -42,5 +42,11 @@ class DeviceHelper():
         return device
 
     def create_device_resp(self, device):
-        device_resp = DeviceMessage(device_id=device.device_id)
+        device_resp = DeviceMessage(device_id=device.device_id, device_name=device.device_name)
         return device_resp
+
+    def get_device_by_device_id(self, device_id):
+        logging.info("device-id=" + device_id)
+        device_list = Device.query(Device.device_id == device_id).fetch()
+        logging.info("Device size = " + str(len(device_list)))
+        return device_list

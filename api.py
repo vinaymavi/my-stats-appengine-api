@@ -7,8 +7,10 @@ from google.appengine.ext import ndb
 import json
 import logging
 from datetime import datetime
-from response.response import MasterDeviceMessage,DeviceMessage
+
 from helper.device_helper import DeviceHelper
+from helper.user_helper import UserHelper
+from my_stats_messages.my_stats_messages import *
 
 
 # [END imports]
@@ -62,6 +64,7 @@ class WebsiteData(messages.Message):
 
 
 # [START greeting_api]
+# TODO rename this api name.
 @endpoints.api(name='greeting', version='v1')
 class GreetingApi(remote.Service):
     @endpoints.method(
@@ -171,6 +174,33 @@ class GreetingApi(remote.Service):
         new_device_id = device_helper.new_device_id().device_id
         device = device_helper.create_device(new_device_id)
         return device_helper.create_device_resp(device)
+
+    @endpoints.method(
+        UserMessage,
+        UserMessage,
+        path='website/user/new',
+        http_method='POST',
+        name='website_config.new_user')
+    def new_user(self, req):
+        user_helper = UserHelper()
+        device_helper = DeviceHelper()
+        fb_id = req.fb_id
+        name = req.name
+        email = req.email
+        user_list = user_helper.create_user(fb_id, name, email)
+        logging.info("user list size=" + str(len(user_list)))
+        if len(user_list) > 0:
+            user = user_list[0]
+
+        if len(req.devices) > 0:
+            device_list = device_helper.get_device_by_device_id(req.devices[0].device_id)
+            logging.info("Device list size=" + str(len(device_list)))
+            if len(device_list) > 0:
+                device = device_list[0]
+                user_helper.link_device(user, device)
+                return user_helper.create_user_resp(user.fb_id)
+        else:
+            return user_helper.create_user_resp(user.fb_id)
 
 
 # [START api_server]

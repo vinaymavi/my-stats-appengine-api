@@ -14,7 +14,7 @@ class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
     add_date = ndb.DateTimeProperty(auto_now_add=True)
-    devices = ndb.StringProperty(repeated=True)
+    devices = ndb.StructuredProperty(Device, repeated=True)
 
 
 class MasterDevice(ndb.Model):
