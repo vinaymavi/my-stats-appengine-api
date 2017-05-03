@@ -7,6 +7,8 @@ from google.appengine.ext import ndb
 import json
 import logging
 from datetime import datetime
+from response.response import MasterDeviceMessage,DeviceMessage
+from helper.device_helper import DeviceHelper
 
 
 # [END imports]
@@ -157,6 +159,18 @@ class GreetingApi(remote.Service):
             ))
         logging.info(len(website_resp_list))
         return WebsiteRespCol(items=website_resp_list)
+
+    @endpoints.method(
+        message_types.VoidMessage,
+        DeviceMessage,
+        path='website/config/new_device_id',
+        http_method='GET',
+        name="website_config.new_device_id")
+    def new_device_id(self, req):
+        device_helper = DeviceHelper()
+        new_device_id = device_helper.new_device_id().device_id
+        device = device_helper.create_device(new_device_id)
+        return device_helper.create_device_resp(device)
 
 
 # [START api_server]

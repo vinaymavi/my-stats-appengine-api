@@ -119,9 +119,11 @@ function sortByDur(obj) {
 }
 function init() {
     gapi.client.load('greeting', 'v1', function () {
-        gapi.client.greeting.website_data.get().execute(function (resp) {
-            console.log(resp.items);
-            drawChart(processItems(resp.items));
-        });
+        if ($("#my-chart").length > 0) {
+            gapi.client.greeting.website_data.get().execute(function (resp) {
+                console.log(resp.items);
+                drawChart(processItems(resp.items));
+            });
+        }
     }, "https://my-stats-ext.appspot.com/_ah/api");
 }
