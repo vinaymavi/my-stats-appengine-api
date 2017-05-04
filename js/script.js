@@ -2,6 +2,60 @@
  * main script to make ajax requests, handle responses and create graphs.
  */
 /*TODO need to optimise this code.*/
+
+var myStats = (function () {
+    var myStats = {};
+    myStats.login = function () {
+        myFB.isLogin().then(function (bool) {
+            if (bool) {
+                checkExtensionAndRegisterUser();
+            } else {
+                myFB.login().then(function () {
+                    checkExtensionAndRegisterUser();
+                });
+            }
+        });
+    };
+
+    function registerUser(data) {
+        http.registerUser(data).then(function (resp) {
+            console.log(resp);
+        })
+    }
+
+    function checkExtensionAndRegisterUser() {
+        var hasUserDetails = false,
+            hasExtensionDetails = false;
+        var data = {};
+        myFB.getDetails().then(function (resp) {
+            console.log(resp);
+            data.fb_id = resp.id;
+            data.name = resp.name;
+            data.email = resp.email;
+            hasUserDetails = true;
+            send();
+        });
+        if (myExt.hasExtension()) {
+            myExt.getDeviceId().then(function (resp) {
+                console.log(resp);
+                data.devices = [];
+                data.devices.push({"device_id": resp.device_id});
+                hasExtensionDetails = true;
+                send();
+            });
+        } else {
+            hasExtensionDetails = true;
+            send();
+        }
+        function send() {
+            if (hasUserDetails && hasExtensionDetails) {
+                registerUser(data);
+            }
+        }
+    }
+
+    return myStats;
+}())
 /**
  * Draw chart.
  * @param data

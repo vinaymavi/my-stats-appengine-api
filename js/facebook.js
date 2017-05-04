@@ -12,50 +12,62 @@ var myFB = (function () {
      * Register event on button for login.
      */
     function registerLogin() {
-        $(BUTTON_ID).on("click", checkLoginStatus)
+        $(BUTTON_ID).on("click", myStats.login)
     }
 
     /**
      * Facebook login.
      */
     function faceBookLogin() {
+        var dfd = jQuery.Deferred();
         FB.login(function (response) {
             if (response.authResponse) {
-                console.log('Welcome!  Fetching your information.... ');
-                FB.api('me/?fields=name,email', function (response) {
-                    console.log(response);
-                    console.log('Good to see you, ' + response.name + '.');
-                });
-                getUserPicture();
+                dfd.resolve();
             } else {
-                console.log('User cancelled login or did not fully authorize.');
+                dfd.reject();
             }
         }, {scope: 'email'});
+        return dfd.promise();
     }
 
     /**
      * Load FB user picture.
      */
     function getUserPicture() {
+        var dfd = jQuery.Deferred();
         FB.api("me/picture", function (resp) {
-            console.log(resp);
+            dfd.resolve(resp);
         })
+        return dfd.promise();
     }
 
     /**
      * Check login status.
      */
-    function checkLoginStatus() {
+    function isLogin() {
+        var dfd = jQuery.Deferred();
         FB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
-                faceBookLogin();
-            }
-            else {
-                faceBookLogin();
+                dfd.resolve(true);
+            } else {
+                dfd.resolve(false);
             }
         });
+        return dfd.promise();
     }
 
+    function getUserDetails() {
+        var dfd = jQuery.Deferred();
+        FB.api('me/?fields=name,email', function (response) {
+            dfd.resolve(response);
+        });
+        return dfd.promise();
+    }
+
+    myFB.login = faceBookLogin;
+    myFB.isLogin = isLogin;
+    myFB.getDetails = getUserDetails;
+    myFB.getProfileImage = getUserPicture;
     return myFB;
 }());
 
