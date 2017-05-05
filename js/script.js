@@ -59,8 +59,10 @@ var myStats = (function () {
         if (myExt.hasExtension()) {
             myExt.getDeviceId().then(function (resp) {
                 console.log(resp);
-                data.devices = [];
-                data.devices.push({"device_id": resp.device_id});
+                if (typeof  resp.device_id !== "undefined") {
+                    data.devices = [];
+                    data.devices.push({"device_id": resp.device_id});
+                }
                 hasExtensionDetails = true;
                 send();
             });

@@ -3,7 +3,7 @@
  */
 var myExt = (function () {
     var myExt = {};
-    var EXTENSION_ID = "mhcocngoccflnidhhgjbfhhkcmegnjib";
+    var EXTENSION_ID = "hlaejfnjkhmmhldkfcnollanjnfgoodn";
 
     function getDeviceId() {
         var dfd = jQuery.Deferred();
@@ -18,15 +18,18 @@ var myExt = (function () {
                 if (data.from === "EXTENSION") {
                     dfd.resolve(data['app_config']);
                 }
-            }catch (e){
+            } catch (e) {
                 console.warn(e);
             }
         });
+        setTimeout(function () {
+            dfd.resolve({});
+        }, 1500)
         return dfd.promise();
     }
 
     function hasExtension() {
-        if (typeof chrome === "undefined") {
+        if (typeof chrome === "undefined" || typeof chrome.runtime === "undefined") {
             return false;
         } else {
             return true;

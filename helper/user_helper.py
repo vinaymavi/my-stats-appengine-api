@@ -37,3 +37,12 @@ class UserHelper():
                 for device in user.devices:
                     user_resp.devices.append(device_helper.create_device_resp(device))
         return user_resp
+
+    def is_device_already_registered(self, device, device_list):
+        is_registered = False
+        for d in device_list:
+            logging.info(set(device.device_id))
+            logging.info(set(d.device_id))
+            if set(device.device_id) == set(d.device_id):
+                is_registered = True
+        return is_registered
