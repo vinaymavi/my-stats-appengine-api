@@ -7,6 +7,7 @@ var myStats = (function () {
     var myStats = {};
     var LOGIN_WELCOME_MSG_ID = '#login-welcome-msg'
     var LOGIN_ERROR_MSG_ID = '#login-error-msg'
+    var AJAX_MSG = '#ajax-loading'
     myStats.login = function () {
         myFB.isLogin().then(function (bool) {
             if (bool) {
@@ -20,7 +21,13 @@ var myStats = (function () {
             }
         });
     };
-
+    myStats.ajaxStart = function () {
+        jQuery(AJAX_MSG).removeClass('invisible');
+    };
+    myStats.ajaxStop = function () {
+        jQuery(AJAX_MSG).addClass('invisible');
+    };
+    /**Private functions*/
     function registerUser(data) {
         http.registerUser(data).then(function (resp) {
             console.log(resp);
@@ -186,12 +193,22 @@ function sortByDur(obj) {
     return sortObj;
 }
 function init() {
+    //TODO is it right use of promise?
     gapi.client.load('greeting', 'v1', function () {
         if ($("#my-chart").length > 0) {
-            gapi.client.greeting.website_data.get().execute(function (resp) {
-                console.log(resp.items);
-                drawChart(processItems(resp.items));
-            });
+            myStats.ajaxStart();
+            myFB.isLogin().then(function (resp) {
+                if (resp) {
+                    myFB.getDetails().then(function (detail) {
+                        gapi.client.greeting.website_data.get_by_fbid({fb_id: detail.id}).execute(function (resp) {
+                            console.log(resp.items);
+                            myStats.ajaxStop();
+                            drawChart(processItems(resp.items));
+                        });
+                    })
+                }
+            })
+
         }
     }, "https://my-stats-ext.appspot.com/_ah/api");
 }
