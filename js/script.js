@@ -5,6 +5,8 @@
 
 var myStats = (function () {
     var myStats = {};
+    var LOGIN_WELCOME_MSG_ID = '#login-welcome-msg'
+    var LOGIN_ERROR_MSG_ID = '#login-error-msg'
     myStats.login = function () {
         myFB.isLogin().then(function (bool) {
             if (bool) {
@@ -12,6 +14,8 @@ var myStats = (function () {
             } else {
                 myFB.login().then(function () {
                     checkExtensionAndRegisterUser();
+                }, function () {
+                    showLoginErrorMessage();
                 });
             }
         });
@@ -20,8 +24,17 @@ var myStats = (function () {
     function registerUser(data) {
         http.registerUser(data).then(function (resp) {
             console.log(resp);
-            window.location='/dashboard';
+            showLoginWelcomeMessage(resp);
+            window.location = '/dashboard';
         })
+    }
+
+    function showLoginWelcomeMessage(resp) {
+        jQuery(LOGIN_WELCOME_MSG_ID).html("Welcome " + resp.name + " ! ").parent().removeClass('invisible');
+    }
+
+    function showLoginErrorMessage() {
+        jQuery(LOGIN_ERROR_MSG_ID).removeClass('invisible');
     }
 
     function checkExtensionAndRegisterUser() {

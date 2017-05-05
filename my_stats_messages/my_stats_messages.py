@@ -16,4 +16,4 @@ class UserMessage(messages.Message):
     fb_id = messages.StringField(1, required=True)
     name = messages.StringField(2, required=True)
     email = messages.StringField(3)
-    devices = messages.MessageField(DeviceMessage, 4,repeated=True)
+    devices = messages.MessageField(DeviceMessage, 4, repeated=True)

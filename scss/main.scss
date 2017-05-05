@@ -127,10 +127,10 @@ footer {
 
 .login {
   .content {
-    padding: 10% 0;
     color: #424242;
     background-color: #F4F6F7;
-    min-height: 300px;
+    height: 90%;
+    min-height: 250px;
     h1, button {
       font-weight: 200;
       margin-bottom: 50px;
@@ -156,4 +156,8 @@ html, body {
       }
     }
   }
+}
+
+a.log-anchor {
+  text-decoration: none;
 }

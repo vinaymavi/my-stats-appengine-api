@@ -9,8 +9,8 @@ handlers:
 - url: /_ah/spi/.*
   script: api.api
 
-- url: /css
-  static_dir: css
+- url: /scss
+  static_dir: scss
 
 - url: /js
   static_dir: js
