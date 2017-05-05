@@ -9,6 +9,7 @@ class Device(ndb.Model):
     add_date = ndb.DateTimeProperty(auto_now_add=True)
 
 
+
 class User(ndb.Model):
     fb_id = ndb.StringProperty()
     name = ndb.StringProperty()
@@ -22,3 +23,13 @@ class MasterDevice(ndb.Model):
     Master device entity only to store last device count.
     """
     device_count = ndb.IntegerProperty(default=0)
+
+
+class Website(ndb.Model):
+    startTime = ndb.DateTimeProperty()
+    endTime = ndb.DateTimeProperty()
+    duration = ndb.FloatProperty()
+    port = ndb.StringProperty()
+    domain = ndb.StringProperty()
+    protocol = ndb.StringProperty()
+    device = ndb.StructuredProperty(Device)

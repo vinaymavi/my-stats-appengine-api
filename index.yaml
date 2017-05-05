@@ -1,0 +1,6 @@
+indexes:
+- kind: Website
+  properties:
+  - name: device.add_date
+  - name: device.device_id
+  - name: startTime

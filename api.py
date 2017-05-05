@@ -10,7 +10,9 @@ from datetime import datetime
 
 from helper.device_helper import DeviceHelper
 from helper.user_helper import UserHelper
+from helper.website_helper import WebsiteHelper
 from my_stats_messages.my_stats_messages import *
+from entities.entities import Website
 
 
 # [END imports]
@@ -34,13 +36,7 @@ STORED_GREETINGS = GreetingCollection(items=[
 
 
 # TODO write a class to convert Model to Message
-class Website(ndb.Model):
-    startTime = ndb.DateTimeProperty()
-    endTime = ndb.DateTimeProperty()
-    duration = ndb.FloatProperty()
-    port = ndb.StringProperty()
-    domain = ndb.StringProperty()
-    protocol = ndb.StringProperty()
+
 
 
 class WebsiteResp(messages.Message):
@@ -50,6 +46,7 @@ class WebsiteResp(messages.Message):
     port = messages.StringField(4)
     domain = messages.StringField(5)
     protocol = messages.StringField(6)
+    device_id = messages.StringField(7)
 
 
 class WebsiteRespCol(messages.Message):
@@ -129,17 +126,24 @@ class GreetingApi(remote.Service):
     def data_push(self, request):
         logging.info(request.value)
         websiteDic = json.loads(request.value);
-        website = Website()
-        logging.warning(websiteDic['duration'])
-        website.duration = websiteDic['duration']
-        website.port = websiteDic['domain']['port']
-        website.domain = websiteDic['domain']['domain']
-        website.protocol = websiteDic['domain']['protocol']
-        website.startTime = datetime.strptime(websiteDic['startTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
-        website.endTime = datetime.strptime(websiteDic['endTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
-        website.put()
-        return WebsiteData(value=request.value)
-        # [END multiply]
+        if 'device_id' in websiteDic:
+            device_helper = DeviceHelper()
+            website = Website()
+            logging.warning(websiteDic['duration'])
+            website.duration = websiteDic['duration']
+            website.port = websiteDic['domain']['port']
+            website.domain = websiteDic['domain']['domain']
+            website.protocol = websiteDic['domain']['protocol']
+            website.startTime = datetime.strptime(websiteDic['startTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
+            website.endTime = datetime.strptime(websiteDic['endTime'], '%Y-%m-%dT%H:%M:%S.%fZ')
+            device_list = device_helper.get_device_by_device_id(websiteDic['device_id'])
+            if len(device_list) > 0:
+                website.device = device_list[0]
+            website.put()
+            return WebsiteData(value=request.value)
+        else:
+            logging.warning("Getting old messages without device ids");
+            return WebsiteData(value=request.value)
 
     @endpoints.method(
         message_types.VoidMessage,
@@ -160,6 +164,37 @@ class GreetingApi(remote.Service):
                 startTime=webresp.startTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 endTime=webresp.endTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
             ))
+        logging.info(len(website_resp_list))
+        return WebsiteRespCol(items=website_resp_list)
+
+    GET_BY_FB_ID = endpoints.ResourceContainer(
+        # The request body should be empty.
+        message_types.VoidMessage,
+        # Accept one url parameter: a string named 'fb_id'
+        fb_id=messages.StringField(1, required=True))
+
+    @endpoints.method(
+        GET_BY_FB_ID,
+        WebsiteRespCol,
+        path='website/data/get_by_fbid',
+        http_method='GET',
+        name='website_data.get_by_fbid')
+    def data_get_by_fb_id(self, req):
+        result = WebsiteHelper().get(fb_id=req.fb_id)
+        website_resp_list = []
+        for web in result:
+            web_resp_item = WebsiteResp(
+                domain=web.domain,
+                protocol=web.protocol,
+                port=web.port,
+                duration=web.duration,
+                startTime=web.startTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                endTime=web.endTime.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+            )
+            if web.device is not None:
+                web_resp_item.device_id = web.device.device_id
+            website_resp_list.append(web_resp_item)
+
         logging.info(len(website_resp_list))
         return WebsiteRespCol(items=website_resp_list)
 

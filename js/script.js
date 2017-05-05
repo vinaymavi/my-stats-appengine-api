@@ -20,6 +20,7 @@ var myStats = (function () {
     function registerUser(data) {
         http.registerUser(data).then(function (resp) {
             console.log(resp);
+            window.location='/dashboard';
         })
     }
 
