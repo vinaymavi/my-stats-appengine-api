@@ -229,9 +229,13 @@ class GreetingApi(remote.Service):
 
         if len(req.devices) > 0:
             device_list = device_helper.get_device_by_device_id(req.devices[0].device_id)
+            logging.info("*****Device List****")
+            logging.info(device_list)
             logging.info("Device list size=" + str(len(device_list)))
             if len(device_list) > 0:
                 device = device_list[0]
+                logging.info("is device ready function response")
+                logging.info(user_helper.is_device_already_registered(device, user.devices))
                 if not user_helper.is_device_already_registered(device, user.devices):
                     user_helper.link_device(user, device)
                 return user_helper.create_user_resp(user.fb_id)

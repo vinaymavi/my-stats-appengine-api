@@ -40,9 +40,14 @@ class UserHelper():
 
     def is_device_already_registered(self, device, device_list):
         is_registered = False
+        logging.info("****Before loop*****")
+        logging.info(device)
+        logging.info(device.device_id)
         for d in device_list:
-            logging.info(set(device.device_id))
-            logging.info(set(d.device_id))
-            if set(device.device_id) == set(d.device_id):
+            logging.info(sorted(device.device_id.split()))
+            logging.info(sorted(d.device_id.split()))
+
+            if sorted(device.device_id.split()) == sorted(d.device_id.split()):
+                logging.info("is_registered=True")
                 is_registered = True
         return is_registered
