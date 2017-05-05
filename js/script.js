@@ -196,6 +196,7 @@ function sortByDur(obj) {
 }
 function init() {
     //TODO is it right use of promise?
+    var processedItems;
     gapi.client.load('greeting', 'v1', function () {
         if ($("#my-chart").length > 0) {
             myStats.ajaxStart();
@@ -205,7 +206,13 @@ function init() {
                         gapi.client.greeting.website_data.get_by_fbid({fb_id: detail.id}).execute(function (resp) {
                             console.log(resp.items);
                             myStats.ajaxStop();
-                            drawChart(processItems(resp.items));
+                            processedItems = processItems(resp.items);
+                            if (typeof processedItems === "undefined") {
+                                alert("Do not have enough data to display :(");
+                            } else {
+                                drawChart(processedItems);
+                            }
+
                         });
                     })
                 }
