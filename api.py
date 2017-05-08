@@ -171,7 +171,11 @@ class GreetingApi(remote.Service):
         # The request body should be empty.
         message_types.VoidMessage,
         # Accept one url parameter: a string named 'fb_id'
-        fb_id=messages.StringField(1, required=True))
+        fb_id=messages.StringField(1, required=True),
+        # supported date format yyyy/mm/dd
+        start_date=messages.StringField(2, required=True),
+        end_date=messages.StringField(3, required=True)
+    )
 
     @endpoints.method(
         GET_BY_FB_ID,
@@ -180,7 +184,9 @@ class GreetingApi(remote.Service):
         http_method='GET',
         name='website_data.get_by_fbid')
     def data_get_by_fb_id(self, req):
-        result = WebsiteHelper().get(fb_id=req.fb_id)
+        start_date = datetime.strptime(req.start_date, "%Y/%m/%d")
+        end_date = datetime.strptime(req.end_date, "%Y/%m/%d")
+        result = WebsiteHelper().get(fb_id=req.fb_id, start_date=start_date, end_date=end_date)
         website_resp_list = []
         for web in result:
             web_resp_item = WebsiteResp(
