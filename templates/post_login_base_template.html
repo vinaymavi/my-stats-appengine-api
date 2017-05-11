@@ -2,13 +2,14 @@
 {% block header %}
     <div class="container-fluid">
         <header class="row align-items-center">
-            <div class="col">
+            <a href="/dashboard" class="col log-anchor">
                 <img alt="MyStats home" class="logo" src="../images/Icons8_flat_pie_chart.svg.png"/><span
                     class="logo-desc"> My Stats</span>
-            </div>
+            </a>
         </header>
     </div>
 {% endblock header %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row blue-strip">
@@ -21,14 +22,48 @@
                     {% block left %}
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Dashboard</a>
+                                <a class="nav-link active" href="/dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/reporting">Reporting</a>
                             </li>
                         </ul>
                     {% endblock left %}
                 </div>
                 <div class="col-lg-10 right-block">
                     {% block right %}
-                        <div id="my-chart" style="width:100%;"></div>
+                        <div class="row time-selection-controls">
+                            <div class="col">
+
+                            </div>
+                            <div class="col">
+                                <div class="btn-group" role="group" aria-label="Duration selection">
+                                    <button type="button" data-days="1" class="btn btn-outline-primary">Today</button>
+                                    <button type="button" data-days="7" class="btn btn-primary">Week</button>
+                                    <button type="button" data-days="15" class="btn btn-outline-primary">15 Days
+                                    </button>
+                                    <button type="button" data-days="30" class="btn btn-outline-primary">1 Month
+                                    </button>
+                                    <button type="button" data-days="90" class="btn btn-outline-primary">3 Month
+                                    </button>
+                                    {# TODO will consider after three months #}
+                                    {#<button type="button" class="btn btn-outline-primary dropdown-toggle"#}
+                                    {#              data-toggle="dropdown"#}
+                                    {#          aria-haspopup="true" aria-expanded="false">#}
+                                    {#          Custom#}
+                                    {#  </button>#}
+                                    {# <div class="dropdown-menu date-picker">#}
+                                    {#   <div class="row">#}
+                                    {#       <div class="col-lg-6" id="date-picker-1"></div>#}
+                                    {#       <div class="col-lg-6" id="date-picker-2"></div>#}
+                                    {#   </div>#}
+                                    {# </div>#}
+                                </div>
+                            </div>
+                        </div>
+                        {% block right-content %}
+                            <div id="my-chart" style="width:100%;"></div>
+                        {% endblock right-content %}
                     {% endblock right %}
                 </div>
             </div>

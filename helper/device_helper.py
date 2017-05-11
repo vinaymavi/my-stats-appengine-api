@@ -10,7 +10,7 @@ class DeviceHelper():
     device_id = ""
 
     def __init__(self):
-        logging.info("constructor calling");
+        logging.info("constructor calling")
 
     def new_device_id(self):
         """

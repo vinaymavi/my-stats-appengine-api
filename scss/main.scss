@@ -122,7 +122,6 @@ footer {
 /*Login page*/
 .blue-strip {
   background-color: #039be5;
-  min-height: 60px;
 }
 
 .login {
@@ -140,6 +139,10 @@ footer {
 
 .right-block {
   border-left: 1px solid #ddd;
+  .dropdown-menu.date-picker{
+    width: 130%;
+    left:-30%;
+  }
 }
 
 html, body {
@@ -148,7 +151,7 @@ html, body {
     height: calc((100% - 115px));
     div.content.text-left {
       height: 100%;
-      .row {
+     &>.row {
         height: 100%;
         .right-block {
           height: 100%

@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="../scss/main.css"/>
 </head>
 <body>
@@ -38,39 +39,45 @@
 {% block content %}
     <div class="hero-banner">
         <div class="hero-banner-content">
-            <h1>Main Heading Content Place</h1>
-            <p>The tools and infrastructure you need to build better apps and grow successful businesses.</p>
-            <a class="btn btn-primary" href="#">Call To Action</a>
+            <h1>Websites time tracking for Chrome</h1>
+            <p>In connected world we spent most of the time on web browsers and measurement of time is most important to
+                grow, lets start doing it
+            </p>
+            <a class="btn btn-primary"
+               href="https://chrome.google.com/webstore/detail/my-stats/hlaejfnjkhmmhldkfcnollanjnfgoodn">Install
+                Extension</a>
         </div>
     </div>
     <div class="row main-content align-items-center">
-        <div class="col-lg-8 content">
-            <h4>H2 Content place</h4>
-            <p>The tools and infrastructure you need to build better apps and grow successful businesses</p>
+        <div class="col-lg-8 col-md-8 content">
+            <h4>We provide cloud first solution</h4>
+            <p>Your data synchronize automatically from multiple accounts to cloud, that will help you to analyze all
+                devices data at single place </p>
         </div>
-        <div class="col-lg-2 text-center">
+        <div class="col-lg-2 col-md-2 text-center">
             <img src="../images/Graphicloads-Colorful-Long-Shadow-Cloud-3.ico">
         </div>
     </div>
     <div class="main-desc row align-items-center">
         <div class="offset-lg-1">
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 col0-md-4">
             <img src="../images/hero-2x.png">
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-7 col-md-7">
             <div class="content">
-                <h2>H2 Content place</h2>
-                <p>The tools and infrastructure you need to build better apps and grow successful businesses</p>
-                <a href="#">Redirect link.</a>
+                <h2>Data analysis availability</h2>
+                <p>Data analysis available on all devices Desktop and Mobiles.</p>
+                <a href="/login">Analyze now</a>
             </div>
         </div>
     </div>
     <div class="try-it-now ">
         <div class="content text-center">
-            <h2>Try now heading</h2>
-            <p>Try now content</p>
-            <a href="#" class="btn btn-primary">Button</a>
+            <h2>Let's try now</h2>
+            <p>It is a great solutions, will help you to grow</p>
+            <a href="https://chrome.google.com/webstore/detail/my-stats/hlaejfnjkhmmhldkfcnollanjnfgoodn"
+               class="btn btn-primary">Install Extension</a>
         </div>
     </div>
 {% endblock content %}
@@ -102,16 +109,15 @@
         </div>
         <div class="row text-center">
             <div class="col">
-                <p>@Copyright@2017 right mystats company.</p>
+                <p>copyright@2017mystats</p>
             </div>
         </div>
     </footer>
 {% endblock footer %}
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
         integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>
@@ -120,10 +126,19 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
+
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/data_processing.js"></script>
+<script src="js/duration_selection.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/login.js"></script>
+<script src="js/report.js"></script>
 <script src="js/facebook.js"></script>
 <script src="js/extension_communication.js"></script>
 <script src="js/http.js"></script>
-<script src="js/script.js"></script>
+<script src="js/mystats.js"></script>
 <script>
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];

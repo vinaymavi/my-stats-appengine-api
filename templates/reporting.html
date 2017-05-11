@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "post_login_base_template.html" %}
+{% block right-content %}
+    <table class="table reporting">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Site Name</th>
+            <th>Duration(HH:mm:ss)</th>
+            <th>Visit Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock right-content %}

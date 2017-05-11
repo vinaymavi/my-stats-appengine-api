@@ -93,8 +93,7 @@ footer {
 
 /*Login page*/
 .blue-strip {
-  background-color: #039be5;
-  min-height: 60px; }
+  background-color: #039be5; }
 
 .login .content {
   color: #424242;
@@ -107,6 +106,9 @@ footer {
 
 .right-block {
   border-left: 1px solid #ddd; }
+  .right-block .dropdown-menu.date-picker {
+    width: 130%;
+    left: -30%; }
 
 html, body {
   height: 100%; }
@@ -114,9 +116,9 @@ html, body {
     height: calc((100% - 115px)); }
     html .container-fluid:nth-child(2) div.content.text-left, body .container-fluid:nth-child(2) div.content.text-left {
       height: 100%; }
-      html .container-fluid:nth-child(2) div.content.text-left .row, body .container-fluid:nth-child(2) div.content.text-left .row {
+      html .container-fluid:nth-child(2) div.content.text-left > .row, body .container-fluid:nth-child(2) div.content.text-left > .row {
         height: 100%; }
-        html .container-fluid:nth-child(2) div.content.text-left .row .right-block, body .container-fluid:nth-child(2) div.content.text-left .row .right-block {
+        html .container-fluid:nth-child(2) div.content.text-left > .row .right-block, body .container-fluid:nth-child(2) div.content.text-left > .row .right-block {
           height: 100%; }
 
 a.log-anchor {

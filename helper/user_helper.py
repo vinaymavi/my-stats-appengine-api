@@ -6,7 +6,7 @@ import logging
 
 class UserHelper():
     def __init__(self):
-        logging.info("constructor calling.");
+        logging.info("constructor calling.")
 
     def link_device(self, user, device):
         user.devices.append(device)
@@ -21,11 +21,11 @@ class UserHelper():
             user = User(fb_id=fb_id, name=name, email=email)
             user.put()
 
-        return self.get_user_by_fb_id(fb_id);
+        return self.get_user_by_fb_id(fb_id)
 
     def get_user_by_fb_id(self, fb_id):
         query = User.query(User.fb_id == fb_id)
-        return query.fetch();
+        return query.fetch()
 
     def create_user_resp(self, fb_id):
         users = self.get_user_by_fb_id(fb_id)

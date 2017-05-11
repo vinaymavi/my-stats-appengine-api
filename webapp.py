@@ -25,8 +25,15 @@ class DashBoard(webapp2.RequestHandler):
         self.response.out.write(template.render(path, {}));
 
 
+class Reporting(webapp2.RequestHandler):
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), 'templates/reporting.html')
+        self.response.out.write(template.render(path, {}));
+
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/login', LoginPage),
-    ('/dashboard', DashBoard)
+    ('/dashboard', DashBoard),
+    ('/reporting', Reporting)
 ], debug=True)
