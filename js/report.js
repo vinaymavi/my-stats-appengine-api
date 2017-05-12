@@ -16,8 +16,8 @@ var myReport = (function () {
     }
 
     function initialReport() {
-        _startDate = moment().subtract(myConfig.DEFAULT_WEBSITE_DATE_DURATION, "days").utc().format(myConfig.API_DATE_FORMAT);
-        _endDate = moment().add(1,'days').utc().format(myConfig.API_DATE_FORMAT);
+        _startDate = moment().subtract(myConfig.DEFAULT_WEBSITE_DATE_DURATION_REPORTING, "days").utc().format(myConfig.API_DATE_FORMAT);
+        _endDate = moment().utc().format(myConfig.API_DATE_FORMAT);
         myFB.getDetails().then(function (resp) {
             fbId = resp.id;
             report(fbId, _startDate, _endDate);
@@ -40,10 +40,10 @@ var myReport = (function () {
         var html = [];
         var index = 1;
         var siteName;
-        for(var i = sortedArr.length -1;i>=0;i--,index++){
+        for (var i = sortedArr.length - 1; i >= 0; i--, index++) {
             siteName = sortedArr[i][0];
             html.push("<tr>");
-            html.push('<th scope="row">' + index +'</th>');
+            html.push('<th scope="row">' + index + '</th>');
             html.push('<td>' + siteName + '</td>');
             html.push('<td>' + moment().startOf('day').seconds(processedItemsObj[siteName]['duration']).format('H:mm:ss') + '</td>');
             html.push('<td>' + processedItemsObj[siteName]['count'] + '</td>');

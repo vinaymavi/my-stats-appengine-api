@@ -81,7 +81,7 @@ var myAlgorithm = (function () {
      * @returns {string} date string in "YYYY-MM-DD" format.
      */
     function dateFormat(ts) {
-        return moment(ts).format(myConfig.PLOTLY_DATE_FORMAT);
+        return moment(ts).local().format(myConfig.PLOTLY_DATE_FORMAT);
     }
 
     /**
@@ -141,10 +141,10 @@ var myAlgorithm = (function () {
         var durStringArr = [];
         var startDateMomentObj = moment(startDate, myConfig.API_DATE_FORMAT);
         var endDateMomentObj = moment(endDate, myConfig.API_DATE_FORMAT);
-        var days = endDateMomentObj.diff(startDateMomentObj, 'days');
-        durStringArr.push(startDateMomentObj.format(myConfig.PLOTLY_DATE_FORMAT));
+        var days = endDateMomentObj.diff(startDateMomentObj, 'days') + 1;
+        durStringArr.push(startDateMomentObj.local().format(myConfig.PLOTLY_DATE_FORMAT));
         for (var i = 0; i < days - 1; i++) {
-            durStringArr.push(startDateMomentObj.add(1, 'days').format(myConfig.PLOTLY_DATE_FORMAT));
+            durStringArr.push(startDateMomentObj.add(1, 'days').local().format(myConfig.PLOTLY_DATE_FORMAT));
         }
         return durStringArr;
     }

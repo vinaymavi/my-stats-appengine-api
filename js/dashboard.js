@@ -13,8 +13,8 @@ var myDashboard = (function () {
      * Display initial graph for one week duration.
      */
     function drawInitialGraph() {
-        startDate = moment().subtract(myConfig.DEFAULT_WEBSITE_DATE_DURATION, "days").format(myConfig.API_DATE_FORMAT);
-        endDate = moment().format(myConfig.API_DATE_FORMAT);
+        startDate = moment().subtract(myConfig.DEFAULT_WEBSITE_DATE_DURATION, "days").utc().format(myConfig.API_DATE_FORMAT);
+        endDate = moment().utc().format(myConfig.API_DATE_FORMAT);
         myFB.getDetails().then(function (resp) {
             fbId = resp.id;
             drawLineChart(fbId, startDate, endDate);

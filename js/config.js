@@ -16,8 +16,9 @@ window.myConfig = (function () {
     myConfig.EXTENSION_RESPONSE_TIME_OUT = 1500;
     myConfig.LOGIN_WELCOME_MSG_ID = '#login-welcome-msg';
     myConfig.LOGIN_ERROR_MSG_ID = '#login-error-msg';
-    myConfig.API_DATE_FORMAT = 'YYYY/MM/DD';
+    myConfig.API_DATE_FORMAT = 'YYYY/MM/DD HH:mm:ss';
     myConfig.PLOTLY_DATE_FORMAT = 'YYYY-MM-DD';
     myConfig.DEFAULT_WEBSITE_DATE_DURATION = 7;
+    myConfig.DEFAULT_WEBSITE_DATE_DURATION_REPORTING = 1;
     return myConfig;
 }());

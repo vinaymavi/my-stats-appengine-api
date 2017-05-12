@@ -1,15 +1,43 @@
 {% extends "post_login_base_template.html" %}
-{% block right-content %}
-    <table class="table reporting">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Site Name</th>
-            <th>Duration(HH:mm:ss)</th>
-            <th>Visit Count</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-{% endblock right-content %}
+{% block right %}
+    <div class="row time-selection-controls">
+        <div class="col text-center">
+            <div class="btn-group" role="group" aria-label="Duration selection">
+                <button type="button" data-days="1" class="btn btn-primary">Today</button>
+                <button type="button" data-days="7" class="btn btn-outline-primary">Week</button>
+                <button type="button" data-days="15" class="btn btn-outline-primary">15 Days
+                </button>
+                <button type="button" data-days="30" class="btn btn-outline-primary">1 Month
+                </button>
+                <button type="button" data-days="90" class="btn btn-outline-primary">3 Month
+                </button>
+                {# TODO will consider after three months #}
+                {#<button type="button" class="btn btn-outline-primary dropdown-toggle"#}
+                {#              data-toggle="dropdown"#}
+                {#          aria-haspopup="true" aria-expanded="false">#}
+                {#          Custom#}
+                {#  </button>#}
+                {# <div class="dropdown-menu date-picker">#}
+                {#   <div class="row">#}
+                {#       <div class="col-lg-6" id="date-picker-1"></div>#}
+                {#       <div class="col-lg-6" id="date-picker-2"></div>#}
+                {#   </div>#}
+                {# </div>#}
+            </div>
+        </div>
+    </div>
+    {% block right-content %}
+        <table class="table reporting">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Site Name</th>
+                <th>Duration(HH:mm:ss)</th>
+                <th>Visit Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    {% endblock right-content %}
+{% endblock right %}

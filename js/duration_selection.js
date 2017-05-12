@@ -22,8 +22,8 @@ var myDur = (function () {
     }
 
     function checkAndUpdateDuration(days) {
-        endDate = moment().add(1, 'days').utc().format(myConfig.API_DATE_FORMAT);
-        startDate = moment().subtract(days - 1, 'days').utc().format(myConfig.API_DATE_FORMAT);
+        endDate = moment().utc().format(myConfig.API_DATE_FORMAT);
+        startDate = moment().subtract(days, 'days').utc().format(myConfig.API_DATE_FORMAT);
         EVENT_DURATION_CHANGE.startDate = startDate;
         EVENT_DURATION_CHANGE.endDate = endDate;
         jQuery('body').trigger(EVENT_DURATION_CHANGE);

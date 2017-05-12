@@ -184,8 +184,10 @@ class GreetingApi(remote.Service):
         http_method='GET',
         name='website_data.get_by_fbid')
     def data_get_by_fb_id(self, req):
-        start_date = datetime.strptime(req.start_date, "%Y/%m/%d")
-        end_date = datetime.strptime(req.end_date, "%Y/%m/%d")
+        start_date = datetime.strptime(req.start_date, "%Y/%m/%d %H:%M:%S")
+        end_date = datetime.strptime(req.end_date, "%Y/%m/%d %H:%M:%S")
+        logging.info(start_date)
+        logging.info(end_date)
         result = WebsiteHelper().get(fb_id=req.fb_id, start_date=start_date, end_date=end_date)
         website_resp_list = []
         for web in result:
